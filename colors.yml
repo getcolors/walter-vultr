@@ -1,0 +1,97 @@
+# Desired state for one Walter development machine on Vultr.
+#
+# This is the only file you normally edit. Every value here is non-secret;
+# credentials are COLORS_PAR_* variables in the ignored .envrc.private.
+
+# Names the work directory, remote-state keys, generated machine keypair, and
+# ~/.ssh/config alias. Never export COLORS_PAR_PROFILE.
+profile: walter-vultr
+workdir: .colors
+
+provider-compute: vultr
+provider-backend: r2
+
+# Keep the deletion guard enabled. Lift it for one authorized delete with
+# COLORS_PAR_COMPUTE_PREVENT_DESTROY=false; never edit this value for a delete.
+compute-prevent-destroy: true
+
+# Used by provider power operations. Walter waits for the requested state rather
+# than returning while Vultr is still transitioning.
+power-wait-seconds: 300
+
+# Walter creates a dedicated persistent ~/.ssh/walter-vultr keypair and a
+# Terraform-managed Vultr key registration. OpenTofu apply runs under an
+# isolated temporary ssh-agent loaded with only this key. The local keypair
+# survives deletion; the Vultr registration follows the deployment state.
+compute-keygen: true
+
+# --- Vultr compute ----------------------------------------------------------
+# Ubuntu 24.04 in Amsterdam on a two-vCPU, four-GB general-purpose instance.
+vultr-name: walter-vultr
+vultr-region: ams
+vultr-plan: vc2-2c-4gb
+vultr-os-id: 2284
+
+# --- GitHub identity --------------------------------------------------------
+# A real create starts GitHub's device flow before provisioning. The resulting
+# machine-owned token is used for HTTPS clones; no GitHub SSH key or forwarded
+# workstation agent reaches the server.
+github-account: amiorin
+git-email: 32617+amiorin@users.noreply.github.com
+
+emacs-config-repo: https://github.com/amiorin/.emacs.d.git
+emacs-config-dest: ~/.config/neoemacs
+
+# --- Tooling ---------------------------------------------------------------
+nix-packages:
+  - asdf-vm
+  - ripgrep
+  - fd
+  - fish
+  - fzf
+  - gh
+  - caddy
+  - awscli2
+  - azure-cli
+  - google-cloud-sdk
+  - oci-cli
+  - babashka
+  - clojure
+  - starship
+  - zoxide
+  - atuin
+  - direnv
+  - eza
+  - zellij
+  - gcc
+  - devenv
+  - claude-code
+  - codex
+  - pi-coding-agent
+
+login-shell: fish
+
+asdf-tools:
+  - name: nodejs
+    version: 24.18.1
+    plugin: https://github.com/asdf-vm/asdf-nodejs.git
+
+corepack-packages:
+  - pnpm
+
+dotfiles-checkout: ~/code/getcolors/dotfiles
+
+clone-orgs:
+  - getcolors
+
+atuin-username: amiorin
+
+seed-agent-credentials:
+  - claude
+  - codex
+  - pi
+
+# --- State backend ----------------------------------------------------------
+# Shared R2 bucket; <profile>/<stage>.tfstate keeps this deployment isolated.
+r2-bucket: tofu-state-319271fed8bc6d2d9059362be1165f37-eu
+r2-endpoint: https://319271fed8bc6d2d9059362be1165f37.eu.r2.cloudflarestorage.com

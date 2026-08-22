@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "package-walter-green": {
+      "source": "getcolors/walter",
+      "sourceType": "github",
+      "skillPath": "skills/package-walter-green/SKILL.md",
+      "computedHash": "05bf08c1d5841ceefcca74cdac6a8617b212b2461ddb36e97d8ee82ee83efaed"
+    }
+  }
+}
