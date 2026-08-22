@@ -42,7 +42,7 @@ ssh-agent loaded with only this key, killed after apply. No personal key or
 forwarded agent is involved.
 
 The provider image initially exposes root, but only `walter-ansible-bootstrap`
-may use it. That stage creates `ubuntu` with UID/GID 1000, the dedicated key and
+may use it. That stage adopts the stock UID/GID 1000 account as `ubuntu`, installs the dedicated key and
 passwordless sudo; writes the earliest sshd drop-in with `PermitRootLogin no`
 and `PasswordAuthentication no`; validates sshd; and reloads it. Every normal
 Ansible stage and `ssh walter-vultr` use ubuntu. Later creates probe ubuntu first

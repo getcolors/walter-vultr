@@ -26,7 +26,7 @@ Terraform-managed Vultr SSH key, so the account registration is removed with
 the deployment while the local keypair survives for a later recreate.
 
 Vultr's image exposes root only for bootstrap. Walter uses that connection once
-to create `ubuntu` (UID/GID 1000) with the dedicated key and passwordless sudo,
+to adopt the stock UID/GID 1000 account as `ubuntu`, install the dedicated key and passwordless sudo,
 then disables root and password SSH. Normal Ansible provisioning and
 `ssh walter-vultr` always use `ubuntu`.
 
