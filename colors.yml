@@ -28,6 +28,9 @@ vultr-instance-id: bab0867b-3837-4256-bbca-8aa6e4e9bf44
 # Terraform-managed Vultr key registration. OpenTofu apply runs under an
 # isolated temporary ssh-agent loaded with only this key. The local keypair
 # survives deletion; the Vultr registration follows the deployment state.
+# Vultr initially exposes root only for Walter's bootstrap; that stage creates
+# ubuntu with passwordless sudo, then disables root and password SSH. Every
+# normal Ansible stage and the managed alias use ubuntu.
 compute-keygen: true
 
 # --- Vultr compute ----------------------------------------------------------
