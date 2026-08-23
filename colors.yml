@@ -22,7 +22,7 @@ power-wait-seconds: 300
 # Immutable provider id from the current instance. Keeping it in desired state
 # lets stop/start work even when the R2 backend is temporarily unavailable.
 # Update it after any destroy/recreate.
-vultr-instance-id: 1ac61a75-3acc-4fb8-bf35-fcd53f5b0aab
+vultr-instance-id: 1d7699c1-5571-46e9-9f5a-1a7ca57f0d14
 
 # Walter creates a dedicated persistent ~/.ssh/walter-vultr keypair and a
 # Terraform-managed Vultr key registration. OpenTofu apply runs under an
