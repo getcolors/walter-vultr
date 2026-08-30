@@ -19,11 +19,11 @@ export `COLORS_PAR_PROFILE`.
 
 ## Machine access
 
-`compute-keygen: true` creates the dedicated persistent keypair
-`~/.ssh/walter-vultr`. OpenTofu apply runs under an isolated temporary
-`ssh-agent` containing only that key. Walter registers its public half as a
-Terraform-managed Vultr SSH key, so the account registration is removed with
-the deployment while the local keypair survives for a later recreate.
+With no explicit provider machine key, Walter generates the dedicated keypair
+`~/.ssh/walter-vultr`. The compute template uses it directly and registers its
+public half as a Terraform-managed Vultr SSH key. A successful delete removes
+the provider registration and then the local keypair; a later create generates
+a fresh pair.
 
 Vultr's image exposes root only for bootstrap. Walter uses that connection once
 to adopt the stock UID/GID 1000 account as `ubuntu`, install the dedicated key and passwordless sudo,

@@ -22,16 +22,15 @@ power-wait-seconds: 300
 # Immutable provider id from the current instance. Keeping it in desired state
 # lets stop/start work even when the R2 backend is temporarily unavailable.
 # Update it after any destroy/recreate.
-vultr-instance-id: 1d7699c1-5571-46e9-9f5a-1a7ca57f0d14
+vultr-instance-id: a1b6b18b-b0f6-4aeb-93c0-a42f1e6b8a46
 
-# Walter creates a dedicated persistent ~/.ssh/walter-vultr keypair and a
-# Terraform-managed Vultr key registration. OpenTofu apply runs under an
-# isolated temporary ssh-agent loaded with only this key. The local keypair
-# survives deletion; the Vultr registration follows the deployment state.
-# Vultr initially exposes root only for Walter's bootstrap; that stage creates
-# ubuntu with passwordless sudo, then disables root and password SSH. Every
-# normal Ansible stage and the managed alias use ubuntu.
-compute-keygen: true
+# With no explicit provider machine key, Walter generates the dedicated
+# ~/.ssh/walter-vultr keypair and a Terraform-managed Vultr key registration.
+# The compute template uses that key directly. A successful delete removes the
+# local key files after destroying the provider state; a later create generates
+# a fresh pair. Vultr initially exposes root only for Walter's bootstrap; that
+# stage creates ubuntu with passwordless sudo, then disables root and password
+# SSH. Every normal Ansible stage and the managed alias use ubuntu.
 
 # --- Vultr compute ----------------------------------------------------------
 # Ubuntu 24.04 in Amsterdam on a two-vCPU, four-GB general-purpose instance.

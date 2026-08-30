@@ -33,13 +33,14 @@ without explicit authorization.
 
 ## Dedicated machine key
 
-`compute-keygen: true` creates `~/.ssh/walter-vultr`, an ed25519 keypair named
-by the deployment profile. An existing file is adopted and never overwritten.
-The keypair survives delete. Walter renders a Terraform-managed `vultr_ssh_key`
-registration and feeds its ID to the instance; the registration is destroyed
-with provider state. OpenTofu's remote-exec runs under a short-lived isolated
-ssh-agent loaded with only this key, killed after apply. No personal key or
-forwarded agent is involved.
+The absent provider machine-key value selects the SSH Keypair Standard's
+default generation mode: Walter creates `~/.ssh/walter-vultr`, an ed25519
+keypair named by the deployment profile. Existing key files without matching
+deployment state are refused rather than adopted or overwritten. Walter renders
+a Terraform-managed `vultr_ssh_key` registration and feeds its ID to the
+instance; a successful delete destroys the registration and then removes the
+local keypair. The compute template uses the generated private key directly; no
+personal key or forwarded agent is involved.
 
 The provider image initially exposes root, but only `walter-ansible-bootstrap`
 may use it. That stage adopts the stock UID/GID 1000 account as `ubuntu`, installs the dedicated key and
