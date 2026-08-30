@@ -83,6 +83,12 @@ asdf-tools:
   - name: nodejs
     version: 24.20.0
     plugin: https://github.com/asdf-vm/asdf-nodejs.git
+  - name: uv
+    version: 0.12.7
+    plugin: https://github.com/asdf-community/asdf-uv.git
+  - name: bun
+    version: 1.4.0
+    plugin: https://github.com/cometkim/asdf-bun.git
 
 corepack-packages:
   - pnpm

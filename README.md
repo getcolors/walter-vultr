@@ -10,6 +10,8 @@ A remote development machine on Vultr, managed with
 ssh walter-vultr
 ./green stop
 ./green start
+./green converge-nix       # update declared Nix entries on all three logins
+./green converge-asdf      # exact asdf versions and Corepack on all three logins
 ```
 
 `colors.yml` is the only file normally edited. The Vultr API token, R2
@@ -36,6 +38,11 @@ Two seat aliases provide isolated, non-sudo workspaces with the same environment
 ssh walter-vultr-rose
 ssh walter-vultr-jack
 ```
+
+`converge-nix` and `converge-asdf` use these managed aliases and require only a
+running machine, not Vultr or R2 credentials. They operate on ubuntu, rose and
+jack; the Nix command preserves unrelated profile entries, while the asdf
+command applies the exact versions in `colors.yml`.
 
 ## Desired machine
 

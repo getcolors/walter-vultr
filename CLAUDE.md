@@ -19,12 +19,17 @@ skill update. `skills-lock.json` records the real Package Skill installation.
 ./green create
 ./green stop
 ./green start
+./green converge-nix       # declared Nix entries on ubuntu and every seat
+./green converge-asdf      # exact asdf versions + Corepack on every login
 ./green delete
 ```
 
 Build and dry-run need no credentials. Real create/delete and power operations
 use `COLORS_PAR_VULTR_API_KEY`; the R2 backend uses
 `COLORS_PAR_R2_ACCESS_KEY_ID` and `COLORS_PAR_R2_SECRET_ACCESS_KEY`.
+
+The two focused convergence commands require an existing, running machine and
+use the managed SSH aliases; they do not call Vultr or read R2 state.
 
 Never export `COLORS_PAR_PROFILE`. Keep `compute-prevent-destroy: true`; lift it
 only for one explicitly authorized delete with
