@@ -20,9 +20,9 @@ compute-prevent-destroy: true
 power-wait-seconds: 300
 
 # Immutable provider id from the current instance. Keeping it in desired state
-# lets stop/start work even when the R2 backend is temporarily unavailable.
-# Update it after any destroy/recreate.
-vultr-instance-id: a1b6b18b-b0f6-4aeb-93c0-a42f1e6b8a46
+# lets stop/start work when the R2 backend is temporarily unavailable. Update it
+# after every destroy/recreate.
+vultr-instance-id: 4df14b3a-85e6-4f88-bfb7-55da7301ec84
 
 # With no explicit provider machine key, Walter generates the dedicated
 # ~/.ssh/walter-vultr keypair and a Terraform-managed Vultr key registration.
@@ -30,14 +30,14 @@ vultr-instance-id: a1b6b18b-b0f6-4aeb-93c0-a42f1e6b8a46
 # local key files after destroying the provider state; a later create generates
 # a fresh pair. Vultr initially exposes root only for Walter's bootstrap; that
 # stage creates ubuntu with passwordless sudo, then disables root and password
-# SSH. Every normal Ansible stage and the managed alias use ubuntu.
+# SSH. Machine-level work and the primary managed alias use ubuntu.
 
 # --- Vultr compute ----------------------------------------------------------
-# Ubuntu 24.04 in Amsterdam on a two-vCPU, four-GB general-purpose instance.
+# Ubuntu 26.04 LTS in Amsterdam on a four-vCPU, eight-GB general-purpose instance.
 vultr-name: walter-vultr
 vultr-region: ams
-vultr-plan: vc2-2c-4gb
-vultr-os-id: 2284
+vultr-plan: vc2-4c-8gb
+vultr-os-id: 2760
 
 # --- GitHub identity --------------------------------------------------------
 # A real create starts GitHub's device flow before provisioning. The resulting
@@ -81,7 +81,7 @@ login-shell: fish
 
 asdf-tools:
   - name: nodejs
-    version: 24.18.1
+    version: 24.20.0
     plugin: https://github.com/asdf-vm/asdf-nodejs.git
 
 corepack-packages:
@@ -98,6 +98,13 @@ seed-agent-credentials:
   - claude
   - codex
   - pi
+
+# Extra isolated logins beside ubuntu. Each receives the same environment in a
+# private 0700 home and has no sudo. Connect with `ssh walter-vultr-rose` and
+# `ssh walter-vultr-jack`; system-level work stays under `ssh walter-vultr`.
+users:
+  - rose
+  - jack
 
 # --- State backend ----------------------------------------------------------
 # Shared R2 bucket; <profile>/<stage>.tfstate keeps this deployment isolated.

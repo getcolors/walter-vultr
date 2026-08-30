@@ -49,6 +49,13 @@ and `PasswordAuthentication no`; validates sshd; and reloads it. Every normal
 Ansible stage and `ssh walter-vultr` use ubuntu. Later creates probe ubuntu first
 and do not depend on root access Walter has already closed.
 
+## Seats
+
+`users: [rose, jack]` adds `ssh walter-vultr-rose` and
+`ssh walter-vultr-jack`. Each seat gets the same per-home environment as ubuntu
+in a private `0700` home and has no sudo. Keep system-level work under the
+primary `ubuntu` login; granting a seat sudo defeats the filesystem isolation.
+
 ## Power and state
 
 `stop` and `start` call Vultr's HTTP API using the immutable instance UUID and

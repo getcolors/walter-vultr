@@ -30,10 +30,17 @@ to adopt the stock UID/GID 1000 account as `ubuntu`, install the dedicated key a
 then disables root and password SSH. Normal Ansible provisioning and
 `ssh walter-vultr` always use `ubuntu`.
 
+Two seat aliases provide isolated, non-sudo workspaces with the same environment:
+
+```sh
+ssh walter-vultr-rose
+ssh walter-vultr-jack
+```
+
 ## Desired machine
 
-The deployment selects Amsterdam (`ams`), Ubuntu 24.04 (`os_id` 2284), and the
-`vc2-2c-4gb` plan. State is stored in Cloudflare R2 under
+The deployment selects Amsterdam (`ams`), Ubuntu 26.04 LTS (`os_id` 2760), and the
+four-vCPU/eight-GB `vc2-4c-8gb` plan. State is stored in Cloudflare R2 under
 `walter-vultr/walter-compute.tfstate`. Destruction remains protected by default.
 
 A real create begins with GitHub's device flow, then provisions and configures
