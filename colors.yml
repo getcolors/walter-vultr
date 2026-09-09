@@ -22,7 +22,6 @@ power-wait-seconds: 300
 # Immutable provider id from the current instance. Keeping it in desired state
 # lets stop/start work when the R2 backend is temporarily unavailable. Update it
 # after every destroy/recreate.
-vultr-instance-id: 4df14b3a-85e6-4f88-bfb7-55da7301ec84
 
 # With no explicit provider machine key, Walter generates the dedicated
 # ~/.ssh/walter-vultr keypair and a Terraform-managed Vultr key registration.
@@ -116,3 +115,6 @@ users:
 # Shared R2 bucket; <profile>/<stage>.tfstate keeps this deployment isolated.
 r2-bucket: tofu-state-319271fed8bc6d2d9059362be1165f37-eu
 r2-endpoint: https://319271fed8bc6d2d9059362be1165f37.eu.r2.cloudflarestorage.com
+
+# Existing deployment ownership must be migrated before create.
+compute-require-existing-state: true
